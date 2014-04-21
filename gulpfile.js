@@ -44,7 +44,6 @@ var paths = {
   spec: SRC + '/spec/*.coffee'
 };
 
-// TODO: don't copy unnecessary stuff
 gulp.task('bower', function () {
   return gulp.src(paths.bower)
     .pipe(gulp.dest(BUILD + '/bower_components'))

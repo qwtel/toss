@@ -1,6 +1,9 @@
 define(function() {
   return Object.freeze({
     HOME: 'home',
-    LOGIN: 'login'
+    DICE: 'dice',
+    TOSS: 'toss',
+    RESULT: 'result',
+    HISTORY: 'history'
   });
 });
