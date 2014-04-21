@@ -21,7 +21,7 @@ define([
         number = COIN;
       }
 
-      var items = _.range(1, this.props.num + 1).reverse().map(function (i) {
+      var items = _.range(1, this.props.num + 1).reverse().map(function (i, j) {
         var content = <span className="icon">{i}</span>;
         if (this.props.num === 2 && i == 2) {
           content = <span className="glyphicon glyphicon-user" />;
@@ -41,6 +41,7 @@ define([
              </div>
             <input
             type="text"
+            tabIndex={j+1}
             ref={'input-'+i}
             className="c c2 pull-left"
             placeholder={number[i]}
@@ -49,19 +50,19 @@ define([
           </div>);
       }, this);
 
-      var header = (
-        <header>
+      var footer = (
+        <footer>
           <a className="item-btn" onClick={this.props.onClick}>
           {text}
           </a>
-        </header>);
+        </footer>);
 
       return (
         <div id="main-page" className="page">
-          {header}
-          <div className="list padding-top">
+          <div className="list padding-bottom">
             {items}
           </div>
+          {footer}
         </div>);
     }
   });

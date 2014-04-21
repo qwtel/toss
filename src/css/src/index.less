@@ -215,11 +215,11 @@ footer {
   border-top: 1px solid #dedede;
 }
 
-.padding-top {
-  padding-top: @itemHeight;
+.padding-bottom {
+  padding-bottom: @itemHeight;
 
   @media (min-aspect-ratio: 1/1) {
-    padding-top: @itemHeight2;
+    padding-bottom: @itemHeight2;
   }
 }
 
@@ -243,13 +243,13 @@ footer {
   .abs();
   .item-font();
   margin: auto;
-  height: @fontSize + 2 * (@itemHeight / 8) + @itemHeight + 2 * (@fontSize / 3) + @fontSize;
+  height: (@fontSize * 0.8) + 2 * (@itemHeight / 8) + @itemHeight + 2 * (@fontSize / 3) + @fontSize;
 
   .name {
     padding: 0 @itemHeight / 20;
     margin-bottom: @itemHeight / 8;
-    font-size: @fontSize;
-    line-height: @fontSize;
+    font-size: @fontSize * 0.8;
+    line-height: @fontSize * 0.8;
   }
 
   .result {
@@ -287,7 +287,7 @@ footer {
       width: 40%;
       padding: 0 @itemHeight2 / 20;
       margin-bottom: @itemHeight2 / 8;
-      font-size: @fontSize2;
+      font-size: @fontSize2 * 0.8;
       line-height: @itemHeight2;
     }
 
@@ -322,14 +322,13 @@ footer {
 
 #history {
   width: 100%;
-  // overflow-x: scroll;
+  overflow-x: scroll;
+  overflow-y: hidden;
 
   > div {
-    width: 100 * @itemHeight;
     height: @itemHeight;
 
     @media (min-aspect-ratio: 1/1) {
-      width: 100 * @itemHeight2;
       height: @itemHeight2;
     }
   }

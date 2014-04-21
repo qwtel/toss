@@ -38,6 +38,8 @@ define([
       routes[PAGE.HOME] = this.setPage.bind(this, PAGE.HOME);
 
       routes[[PAGE.DICE, ':num', PAGE.RESULT].join('/')] = function (num) {
+        this.getHistory(num);
+
         this.setState({
           num: Number(num)
         });
@@ -45,6 +47,8 @@ define([
       }.bind(this);
 
       routes[[PAGE.DICE, ':num'].join('/')] = function (num) {
+        this.getHistory(num);
+
         this.setState({
           num: Number(num)
         });
@@ -71,8 +75,6 @@ define([
       var min = 1;
       var max = this.state.num;
       var res = Math.floor(Math.random() * (max - min + 1) + min);
-
-      this.getHistory(max);
 
       // persist
       this.state.history[max].unshift(res);
@@ -127,12 +129,6 @@ define([
             dict={this.state.dict}
             />;
           break;
-
-        case PAGE.HISTORY:
-          page =
-            <div />;
-          break;
-
       }
       return page;
     },
