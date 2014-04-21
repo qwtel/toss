@@ -18,7 +18,7 @@ define([
         num: null,
         res: null,
         history: {},
-        dict: {},
+        dict: {}
       };
     },
 
@@ -51,12 +51,19 @@ define([
         this.setPage(PAGE.DICE);
       }.bind(this);
 
-      routes[PAGE.HISTORY] = function () {
-        this.setPage(PAGE.HISTORY);
-      }.bind(this);
-
       this.router = Router(routes);
       this.router.init(PAGE.HOME);
+    },
+
+    getHistory: function(max) {
+      if (typeof this.state.history[max] === 'undefined') {
+        var json = localStorage.getItem(max);
+        if (json != null) {
+          this.state.history[max] = JSON.parse(json);
+        } else {
+          this.state.history[max] = [];
+        }
+      }
     },
 
     rand: function () {
@@ -65,16 +72,9 @@ define([
       var max = this.state.num;
       var res = Math.floor(Math.random() * (max - min + 1) + min);
 
-      // persist
-      if (typeof this.state.history[max] === 'undefined') {
-        var string = localStorage.getItem(max);
-        if (string != null) {
-          this.state.history[max] = JSON.parse(string);
-        } else {
-          this.state.history[max] = [];
-        }
-      }
+      this.getHistory(max);
 
+      // persist
       this.state.history[max].unshift(res);
       localStorage.setItem(max, JSON.stringify(this.state.history[max]));
 

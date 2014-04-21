@@ -14,53 +14,47 @@ define([
     getInitialState: function () {
       return {
         count: 0,
-        frontStack: [],
-        backStack: [],
-        frontStackPointer: 0,
-        backStackPointer: 0
+        fCount: 0,
+        bCount: 1
       };
     },
 
     componentDidMount: function () {
       setTimeout(function () {
 
+        var swap = function(front, prev, next) {
+          this.refs[front + '-' + prev].getDOMNode().style.opacity = "0";
+          this.refs[front + '-' + next].getDOMNode().style.opacity = "1";
+        }.bind(this);
+
         var allThis = function () {
-          console.log('tick');
+          var current = this.state.count + 1;
 
-          var current = (this.state.count + 1) % this.props.num;
-
-          var swap = function(prev, next) {
-            // hide prev
-            //console.log('hide', prev);
-            this.refs['face-' + prev].getDOMNode().style.opacity = "0";
-
-            // show next
-            //console.log('show', next);
-            this.refs['face-' + next].getDOMNode().style.opacity = "1";
-          }.bind(this);
-
-          // TODO: Make this better
-          var prev, next;
+          var next;
           if (current % 2 !== 0) {
-            prev = this.state.frontStackPointer;
-            next = ((this.state.frontStackPointer + 1) % this.state.frontStack.length);
-            this.state.frontStackPointer = next;
-            swap(this.state.frontStack[prev], this.state.frontStack[next]);
-          }
-          else {
-            prev = this.state.backStackPointer;
-            next = ((this.state.backStackPointer + 1) % this.state.backStack.length);
-            this.state.backStackPointer = next;
-            swap(this.state.backStack[prev], this.state.backStack[next]);
+            next = (this.state.fCount + 2) % this.props.num;
+            swap('front', this.state.fCount, next);
+
+            //this.setState({
+            this.state.count = current;
+            this.state.fCount = next;
+            //});
           }
 
-          this.setState({
-            count: current
-          });
+          else {
+            next = (this.state.bCount + 2) % this.props.num;
+            swap('back', this.state.bCount, next);
+
+            //this.setState({
+            this.state.count = current;
+            this.state.bCount = next;
+            //});
+          }
 
         }.bind(this);
 
         allThis();
+
         this.interval = setInterval(allThis, animationDuration / 2);
 
       }.bind(this), animationDuration / 4);
@@ -72,33 +66,47 @@ define([
     },
 
     render: function () {
-      var faces = _.range(0, this.props.num).map(function (i) {
-        var classes;
+      /*
+       var faces = _.range(0, this.props.num).map(function (i) {
 
-        if (i % 2 === 0) {
-          classes = 'front';
-          this.state.frontStack.push(i);
-        } else {
-          classes = 'back';
-          this.state.backStack.push(i);
-        }
+       var classes = '';
+       var style = { opacity: 0 };
 
-        var style = {opacity: 0};
-        if (i === 0 || i === 1) {
-          style = {opacity: 1};
-        }
+       if (i === this.state.fCount) {
+       //classes = 'front';
+       style = {
+       webkitTransform: '',
+       opacity: 1
+       };
+       } else if (i === this.state.bCount) {
+       style = {
+       webkitTransform: rotateY(180deg)'',
+       opacity: 1
+       };
+       }
+       */
 
-        return (
-          <div key={'face-' + i} className={classes} ref={'face-' + i} style={style}>
-            <ResultPage
-            num={this.props.num}
-            res={i + 1}
-            history={this.props.history}
-            dict={this.props.dict}
-            />
-          </div>);
-      }, this);
+      var fuckFun = function (front) {
+        return _.range(0, this.props.num).map(function (i) {
 
+          var style = {opacity: 0};
+          if ((front == 'front' && i === 0) || (front == 'back' && i === 1)) {
+            style = {opacity: 1};
+          }
+
+          return (
+            <div className={front} style={style} ref={front + '-' + i} >
+              <ResultPage
+              num={this.props.num}
+              res={i + 1}
+              history={this.props.history}
+              dict={this.props.dict}
+              />
+            </div>);
+        }, this);
+      }.bind(this);
+
+      var faces = _.union(fuckFun('front'), fuckFun('back'));
 
       return (
         <div id="card" className="spin">

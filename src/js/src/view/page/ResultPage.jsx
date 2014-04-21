@@ -19,7 +19,7 @@ define([
 
       var header;
       if (this.props.history != null) {
-        var history = _.tail(_.take(this.props.history, 5)).map(function (i) {
+        var history = _.tail(_.take(this.props.history, 101)).map(function (i) {
           var content = <span className="icon">{i}</span>;
           if (this.props.num === 2 && i == 2) {
             content = <span className="glyphicon glyphicon-user" />;
@@ -35,7 +35,7 @@ define([
         header =
           <header>
             <div id="history" className="item face item-color-2">
-              <div className="ribbon">
+              <div>
                 {history}
               </div>
             </div>
