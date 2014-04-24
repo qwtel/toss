@@ -82,13 +82,13 @@ gulp.task('images', function () {
 gulp.task('compile', ['js', 'jsx', 'coffee', 'less', 'images']);
 
 // Rerun the task when a file changes
-gulp.task('watch', function () {
+gulp.task('watch', ['compile'], function () {
+  gulp.watch(paths.js, ['js']);
   gulp.watch(paths.jsx, ['jsx']);
   gulp.watch(paths.coffee, ['coffee']);
-  gulp.watch(paths.js, ['js']);
   gulp.watch(paths.less, ['less']);
   gulp.watch(paths.images, ['images']);
-  gulp.watch(paths.spec, ['spec']);
+  //gulp.watch(paths.spec, ['spec']);
 });
 
 gulp.task('index', function () {
