@@ -32,7 +32,7 @@ define([
       }
     },
 
-    componentDidMount: function () {
+    configRoutes: function() {
       var routes = {};
 
       routes[PAGE.HOME] = function() {
@@ -57,6 +57,44 @@ define([
 
       this.router = Router(routes);
       this.router.init('/' + PAGE.HOME);
+    },
+
+    setRem: function() {
+      var docEl = document.documentElement;
+      var recalc = function () {
+
+        var mq = window.matchMedia("(min-aspect-ratio: 1/1)");
+        var reference;
+
+        if (!mq.matches) {
+          reference = docEl.clientWidth;
+        } else {
+          reference = docEl.clientHeight;
+        }
+
+        docEl.style.fontSize = (reference/100) + 'px';
+        docEl.style.display = "none";
+        docEl.clientWidth; // Force relayout - important to new Androids
+        docEl.style.display = "";
+      };
+
+      if (!window.matchMedia) return;
+      var hasSupportFor = function (unit) {
+        var div = document.createElement('div');
+        div.setAttribute('style', 'font-size: 1' + unit);
+        return (div.style.fontSize == '1' + unit);
+      };
+
+      //if (hasSupportFor("vw") && hasSupportFor("vh")) return;
+      if (!hasSupportFor("rem")) return;
+
+      window.addEventListener('resize', recalc, false);
+      recalc(); // make sure the DOM is loaded at this point.
+    },
+
+    componentDidMount: function () {
+      this.configRoutes();
+      this.setRem();
     },
 
     getHistory: function () {

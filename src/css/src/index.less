@@ -1,10 +1,10 @@
 @yellow: #FEB379;
 @red: #D37982;
 
-@itemHeight: 25vw;
+@itemHeight: 25rem;
 @fontSize: @itemHeight / 3;
 
-@itemHeight2: 25vh;
+@itemHeight2: 25rem;
 @fontSize2: @itemHeight2 / 3;
 
 * {
@@ -92,10 +92,6 @@ a {
   &:hover, &:focus {
     text-decoration: none;
   }
-
-  @media (min-aspect-ratio: 1/1) {
-    font-size: @fontSize2;
-  }
 }
 
 .item {
@@ -103,10 +99,6 @@ a {
   width: 100%;
   height: @itemHeight;
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-
-  @media (min-aspect-ratio: 1/1) {
-    height: @itemHeight2;
-  }
 }
 
 .item-btn {
@@ -122,19 +114,6 @@ a {
 
   .glyphicon {
     font-size: @fontSize * 0.8;
-  }
-
-  @media (min-aspect-ratio: 1/1) {
-    height: @itemHeight2;
-    line-height: @itemHeight2;
-
-    .icon {
-      font-size: @fontSize2;
-    }
-
-    .glyphicon {
-      font-size: @fontSize2 * 0.8;
-    }
   }
 }
 
@@ -154,10 +133,6 @@ a {
   .c1, .c2 {
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
     height: @itemHeight;
-
-    @media (min-aspect-ratio: 1/1) {
-      height: @itemHeight2;
-    }
   }
 
   .c1 {
@@ -167,11 +142,6 @@ a {
     color: #fff;
     //background-color: rgba(0, 0, 0, 0.05);
     border-right: 1px solid rgba(255, 255, 255, 0.3);
-
-    @media (min-aspect-ratio: 1/1) {
-      width: @itemHeight2;
-      height: @itemHeight2;
-    }
   }
 
   .c2 {
@@ -185,7 +155,7 @@ a {
     height: @itemHeight;
     padding: ((@itemHeight - @fontSize) / 2) @itemHeight / 10;
 
-    border: 5px solid rgba(0, 0, 0, 0.1);
+    border: @itemHeight/20 solid rgba(0, 0, 0, 0.1);
     //border: (@itemHeight / 25) solid #ccc;
 
     background: transparent;
@@ -197,12 +167,6 @@ a {
     &:focus {
       color: #fff;
       border-color: #fff;
-    }
-
-    @media (min-aspect-ratio: 1/1) {
-      width: 100%;
-      height: @itemHeight2;
-      padding: ((@itemHeight2 - @fontSize2) / 2) @itemHeight2 / 10;
     }
 
     &::placeholder {
@@ -218,10 +182,6 @@ header, footer {
   z-index: 2;
   left: 0;
   background-color: rgba(0, 0, 0, 0.05);
-
-  @media (min-aspect-ratio: 1/1) {
-    height: @itemHeight2;
-  }
 }
 
 header {
@@ -239,14 +199,6 @@ footer {
     margin-bottom: @itemHeight;
   }
   //padding-bottom: @itemHeight;
-
-  @media (min-aspect-ratio: 1/1) {
-    > .item:last-child {
-      margin-bottom: @itemHeight2;
-    }
-
-    //padding-bottom: @itemHeight2;
-  }
 }
 
 .spin {
@@ -319,24 +271,24 @@ footer {
   }
 
   @media (min-aspect-ratio: 8/10) {
-    height: @itemHeight2;
+    height: @itemHeight;
 
     .center-child {
-      font-size: @fontSize2 * 0.8;
-      line-height: @itemHeight2;
-      height: @itemHeight2;
+      font-size: @fontSize * 0.8;
+      line-height: @itemHeight;
+      height: @itemHeight;
 
       > * {
         display: inline-block;
         vertical-align: middle;
-        line-height: @fontSize2;
+        line-height: @fontSize;
       }
     }
 
     .name {
       float: left;
       width: 40%;
-      padding: 0 @itemHeight2 / 20;
+      padding: 0 @itemHeight / 20;
     }
 
     .result {
@@ -344,26 +296,21 @@ footer {
       width: 20%;
 
       > * {
-        line-height: @itemHeight2;
+        line-height: @itemHeight;
       }
 
       .icon {
-        font-size: @itemHeight2 * 0.8;
+        font-size: @itemHeight * 0.8;
       }
 
       .glyphicon {
-        font-size: @itemHeight2 * 0.6;
+        font-size: @itemHeight * 0.6;
       }
     }
 
     .chance {
       float: left;
       width: 40%;
-
-      .small-text {
-        font-size: @fontSize2 / 4;
-        line-height: @fontSize2 / 4;
-      }
     }
   }
 }
@@ -381,9 +328,5 @@ footer {
 
   > div {
     height: @itemHeight;
-
-    @media (min-aspect-ratio: 1/1) {
-      height: @itemHeight2;
-    }
   }
 }
