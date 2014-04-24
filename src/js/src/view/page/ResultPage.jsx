@@ -3,8 +3,8 @@
 define([
   'underscore',
   'react',
-  'view/page/Result',
-  'view/page/History',
+  'view/component/Result',
+  'view/component/History',
   'mix'
 ], function (_, React, Result, History, mix) {
   return React.createClass({

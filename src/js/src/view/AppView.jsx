@@ -7,7 +7,7 @@ define([
   'view/page/MainPage',
   'view/page/TossPage',
   'view/page/ResultPage',
-  'view/page/SpinCard',
+  'view/SpinCard'
 ], function (React, Router, PAGE, MainPage, TossPage, ResultPage, SpinCard) {
   return React.createClass({
     getInitialState: function () {

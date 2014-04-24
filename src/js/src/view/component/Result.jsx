@@ -1,5 +1,5 @@
 define([
-  'react',
+  '../../../../bower_components/react/react-with-addons',
   'coin',
   'numbers'
 ], function (React, COIN, NUMBER) {

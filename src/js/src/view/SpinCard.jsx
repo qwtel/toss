@@ -1,9 +1,9 @@
 /** @jsx React.DOM */
 
 define([
-  'react',
+  '../../../bower_components/react/react-with-addons',
   'mix',
-  'view/page/History'
+  'view/component/History'
 ], function (React, mix, History) {
   return React.createClass({
     render: function () {
