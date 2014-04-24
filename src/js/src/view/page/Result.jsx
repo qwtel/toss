@@ -30,7 +30,7 @@ define([
 
         result = [
           <div className="name">
-            {resText}
+            <p>{resText}</p>
           </div>,
           <div className="result">
             {content}

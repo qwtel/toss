@@ -4,12 +4,17 @@ define([
   'underscore',
   'react',
   'view/page/Result',
-  'view/page/History'
-], function (_, React, Result, History) {
+  'view/page/History',
+  'mix'
+], function (_, React, Result, History, mix) {
   return React.createClass({
     render: function () {
+
+      var style = mix.bg((this.props.num / 2) / 11);
+      var styleFooter = mix.mix((this.props.num) / 11);
+
       return (
-        <div id="main-page" className="page padding-top">
+        <div id="main-page" className="page padding-top" style={style}>
           <header>
             <History
             num={this.props.num}
@@ -25,7 +30,7 @@ define([
             />
           </section>
 
-          <footer>
+          <footer style={styleFooter}>
             <a className="item-btn" onClick={this.props.onClick}>
               { this.props.num === 2 ? 'Toss' : 'Roll' }
             </a>

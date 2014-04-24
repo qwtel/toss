@@ -1,3 +1,12 @@
+@yellow: #FEB379;
+@red: #D37982;
+
+@itemHeight: 25vw;
+@fontSize: @itemHeight / 3;
+
+@itemHeight2: 25vh;
+@fontSize2: @itemHeight2 / 3;
+
 * {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
 }
@@ -10,11 +19,14 @@ body {
   -webkit-touch-callout: none; /* prevent callout to copy image, etc when tap to hold */
   -webkit-text-size-adjust: none; /* prevent webkit from resizing text to fit */
   -webkit-user-select: none; /* prevent copy paste, to allow, change 'none' to 'text' */
-  font-family: "Montserrat", sans-serif;
+  font-family: "Montserrat", san-serif;
+  background: lighten(@yellow, 40%);
 }
 
 a {
+  cursor: pointer;
   color: #fff;
+
   &:hover, &:focus {
     color: #fff;
   }
@@ -36,7 +48,8 @@ a {
 
 .page {
   .abs();
-  background: #efefef;
+  //background: #A7DBD8;
+  background: lighten(@yellow, 20%);
 }
 
 #card {
@@ -64,32 +77,10 @@ a {
   transform: rotateY(-180deg);
 }
 
-a {
-  cursor: pointer;
-}
-
-@yellow: #ccc;
-@orange: #ddd;
-
-@itemHeight: 25vw;
-@fontSize: @itemHeight / 3;
-
-@itemHeight2: 25vh;
-@fontSize2: @itemHeight2 / 3;
-
 .list {
   .abs();
   z-index: 1;
   overflow-y: scroll;
-}
-
-.item-color(@fg, @bg) {
-  background: @bg;
-  color: @fg;
-  border-bottom: 1px solid lighten(@bg, 5%);
-  .muted {
-    opacity: 0.67;
-  }
 }
 
 .item-font {
@@ -111,6 +102,7 @@ a {
   display: block;
   width: 100%;
   height: @itemHeight;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 
   @media (min-aspect-ratio: 1/1) {
     height: @itemHeight2;
@@ -120,45 +112,61 @@ a {
 .item-btn {
   .item-font();
   display: block;
-  padding: 0 @itemHeight/10;
-  padding-top: ~"calc((@{itemHeight} - @{fontSize}) / 2)";
   height: @itemHeight;
-  line-height: @fontSize;
-  border-right: 1px solid lighten(@orange, 5%);
+  line-height: @itemHeight;
+  //border-right: 1px solid lighten(@orange1, 5%);
 
   .icon {
-    font-size: @fontSize * 1.3;
+    font-size: @fontSize;
+  }
+
+  .glyphicon {
+    font-size: @fontSize * 0.8;
   }
 
   @media (min-aspect-ratio: 1/1) {
-    padding: 0 @itemHeight2/10;
-    padding-top: ~"calc((@{itemHeight2} - @{fontSize2}) / 2)";
     height: @itemHeight2;
-    line-height: @fontSize2;
+    line-height: @itemHeight2;
 
     .icon {
-      font-size: @fontSize2 * 1.3;
+      font-size: @fontSize2;
+    }
+
+    .glyphicon {
+      font-size: @fontSize2 * 0.8;
     }
   }
 }
 
-.item-color-1 {
-  .item-color(#fff, @yellow);
-}
-
-.item-color-2 {
-  .item-color(#fff, @orange);
+.item-color(@fg, @bg) {
+  background: @bg;
+  color: @fg;
+  border-bottom: 1px solid lighten(@bg, 5%);
+  .muted {
+    opacity: 0.67;
+  }
+  a:active {
+    //background-color: @blue;
+  }
 }
 
 .face {
-  .c {
-    float: left;
+  .c1, .c2 {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    height: @itemHeight;
+
+    @media (min-aspect-ratio: 1/1) {
+      height: @itemHeight2;
+    }
   }
 
   .c1 {
+    float: left;
     width: @itemHeight;
     height: @itemHeight;
-    background-color: rgba(0, 0, 0, 0.05);
+    color: #fff;
+    //background-color: rgba(0, 0, 0, 0.05);
+    border-right: 1px solid rgba(255, 255, 255, 0.3);
 
     @media (min-aspect-ratio: 1/1) {
       width: @itemHeight2;
@@ -166,28 +174,39 @@ a {
     }
   }
 
+  .c2 {
+    overflow: hidden;
+  }
+
   input {
     .item-font();
-    text-align: left;
+
+    width: 100%;
+    height: @itemHeight;
+    padding: ((@itemHeight - @fontSize) / 2) @itemHeight / 10;
+
+    border: 5px solid rgba(0, 0, 0, 0.1);
+    //border: (@itemHeight / 25) solid #ccc;
+
+    background: transparent;
     color: #fff;
     outline: 0;
-    background: transparent;
-    width: ~"calc(100% - @{itemHeight})";
-    height: ~"calc(@{itemHeight} - 1px)";
-    border: (@itemHeight/25) solid #ccc;
-    padding: ~"calc((@{itemHeight} - @{fontSize}) / 2)" @itemHeight/10;
     text-transform: uppercase;
+    text-align: left;
+
     &:focus {
-      color: #a0a0a0;
-      border-color: #a0a0a0;
+      color: #fff;
+      border-color: #fff;
     }
 
     @media (min-aspect-ratio: 1/1) {
-      background: transparent;
-      width: ~"calc(100% - @{itemHeight2})";
-      height: ~"calc(@{itemHeight2} - 1px)";
-      border: (@itemHeight2/25) solid #ccc;
-      padding: ~"calc((@{itemHeight2} - @{fontSize2}) / 2)" @itemHeight2/10;
+      width: 100%;
+      height: @itemHeight2;
+      padding: ((@itemHeight2 - @fontSize2) / 2) @itemHeight2 / 10;
+    }
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.5);
     }
   }
 }
@@ -198,7 +217,7 @@ header, footer {
   position: absolute;
   z-index: 2;
   left: 0;
-  background: @yellow;
+  background-color: rgba(0, 0, 0, 0.05);
 
   @media (min-aspect-ratio: 1/1) {
     height: @itemHeight2;
@@ -207,19 +226,26 @@ header, footer {
 
 header {
   top: 0;
-  border-bottom: 1px solid #dedede;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 footer {
   bottom: 0;
-  border-top: 1px solid #dedede;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .padding-bottom {
-  padding-bottom: @itemHeight;
+  > .item:last-child {
+    margin-bottom: @itemHeight;
+  }
+  //padding-bottom: @itemHeight;
 
   @media (min-aspect-ratio: 1/1) {
-    padding-bottom: @itemHeight2;
+    > .item:last-child {
+      margin-bottom: @itemHeight2;
+    }
+
+    //padding-bottom: @itemHeight2;
   }
 }
 
@@ -228,6 +254,16 @@ footer {
   animation-duration: 500ms;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
+
+  /*
+  .front .page {
+    background-color: @yellow;
+  }
+
+  .back .page {
+    background-color: @red;
+  }
+  */
 }
 
 @keyframes spin {
@@ -235,15 +271,18 @@ footer {
     transform: rotateY(0deg);
   }
   to {
-    transform:rotateY(-360deg);
+    transform: rotateY(-360deg);
   }
 }
 
 #result {
   .abs();
   .item-font();
+  color: rgba(0, 0, 0, 0.5);
   margin: auto;
-  height: (@fontSize * 0.8) + 2 * (@itemHeight / 8) + @itemHeight + 2 * (@fontSize / 3) + @fontSize;
+  height: (@fontSize * 0.8) + 2 * (@itemHeight / 8)
+    + @itemHeight
+    + 2 * (@fontSize / 3) + @fontSize;
 
   .name {
     padding: 0 @itemHeight / 20;
@@ -279,7 +318,7 @@ footer {
     }
   }
 
-  @media (min-aspect-ratio: 1/1) {
+  @media (min-aspect-ratio: 8/10) {
     height: @itemHeight2;
 
     .name {
@@ -289,6 +328,13 @@ footer {
       margin-bottom: @itemHeight2 / 8;
       font-size: @fontSize2 * 0.8;
       line-height: @itemHeight2;
+      height: @itemHeight2;
+
+      > p {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: @fontSize2;
+      }
     }
 
     .result {
@@ -301,20 +347,22 @@ footer {
       }
 
       .icon {
-        font-size: @itemHeight2 * 1.1;
+        font-size: @itemHeight2 * 0.8;
       }
 
       .glyphicon {
-        font-size: @itemHeight2 * 1.1 * 0.75;
+        font-size: @itemHeight2 * 0.6;
       }
     }
+
     .chance {
       float: left;
       width: 40%;
       padding-top: @itemHeight2 / 6;
+      font-size: @fontSize2 * 0.8;
       .small-text {
-        font-size: @fontSize2 / 3;
-        line-height: @fontSize2 / 3;
+        font-size: @fontSize2 / 4;
+        line-height: @fontSize2 / 4;
       }
     }
   }
@@ -324,6 +372,12 @@ footer {
   width: 100%;
   overflow-x: scroll;
   overflow-y: hidden;
+
+  .face {
+    .c1, .c2 {
+      border-bottom: none;
+    }
+  }
 
   > div {
     height: @itemHeight;

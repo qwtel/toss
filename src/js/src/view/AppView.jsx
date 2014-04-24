@@ -17,7 +17,7 @@ define([
         spin: 0,
         num: null,
         res: null,
-        history: {},
+        history: [],
         dict: {}
       };
     },
@@ -35,11 +35,14 @@ define([
     componentDidMount: function () {
       var routes = {};
 
-      routes[PAGE.HOME] = this.setPage.bind(this, PAGE.HOME);
+      routes[PAGE.HOME] = function() {
+        this.getHistory();
+        this.setPage(PAGE.HOME);
+      }.bind(this);
+
+      routes[''] = routes[PAGE.HOME];
 
       routes[[PAGE.DICE, ':num', PAGE.RESULT].join('/')] = function (num) {
-        this.getHistory(num);
-
         this.setState({
           num: Number(num)
         });
@@ -47,8 +50,6 @@ define([
       }.bind(this);
 
       routes[[PAGE.DICE, ':num'].join('/')] = function (num) {
-        this.getHistory(num);
-
         this.setState({
           num: Number(num)
         });
@@ -56,18 +57,15 @@ define([
       }.bind(this);
 
       this.router = Router(routes);
-      this.router.init(PAGE.HOME);
+      this.router.init('/' + PAGE.HOME);
     },
 
-    getHistory: function(max) {
-      if (typeof this.state.history[max] === 'undefined') {
-        var json = localStorage.getItem(max);
-        if (json != null) {
-          this.state.history[max] = JSON.parse(json);
-        } else {
-          this.state.history[max] = [];
-        }
-      }
+    getHistory: function () {
+      this.state.history = [];
+    },
+
+    setHistory: function (res) {
+      this.state.history.unshift(res);
     },
 
     rand: function () {
@@ -76,9 +74,7 @@ define([
       var max = this.state.num;
       var res = Math.floor(Math.random() * (max - min + 1) + min);
 
-      // persist
-      this.state.history[max].unshift(res);
-      localStorage.setItem(max, JSON.stringify(this.state.history[max]));
+      this.setHistory(res);
 
       // change ui
       this.setState({
@@ -92,6 +88,7 @@ define([
       this.setState({
         page: PAGE.TOSS
       });
+      return true;
     },
 
     onChange: function (key, value) {
@@ -125,7 +122,7 @@ define([
             num={this.state.num}
             res={this.state.res}
             onClick={this.toss}
-            history={this.state.history[this.state.num]}
+            history={this.state.history}
             dict={this.state.dict}
             />;
           break;
@@ -171,7 +168,7 @@ define([
         onClick = this.rand;
         card =
           <SpinCard
-          history={this.state.history[this.state.num]}
+          history={this.state.history}
           dict={this.state.dict}
           num={this.state.num}
           dict={this.state.dict}

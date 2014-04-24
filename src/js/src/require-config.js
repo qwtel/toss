@@ -6,7 +6,8 @@ define(function() {
       director: '../../bower_components/director/build/director',
       fastclick: '../../bower_components/fastclick/lib/fastclick',
       react: '../../bower_components/react/react-with-addons',
-      underscore: '../../bower_components/underscore/underscore'
+      underscore: '../../bower_components/underscore/underscore',
+      less: '../../bower_components/less/dist/less-1.7.0'
     },
     shim: {
       director: {

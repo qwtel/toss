@@ -1,6 +1,8 @@
 define([
-  'react'
-], function (React) {
+  'react',
+  'less',
+  'mix'
+], function (React, Less, mix) {
   return React.createClass({
     propTypes: {
       num: React.PropTypes.number,
@@ -10,15 +12,17 @@ define([
     render: function () {
       var history;
       if (this.props.history != null) {
-        history = _.tail(_.take(this.props.history, 101)).map(function (i) {
+        history = this.props.history.map(function (i) {
 
           var content = <span className="icon">{i}</span>;
           if (this.props.num === 2 && i == 2) {
             content = <span className="glyphicon glyphicon-user" />;
           }
 
+          var style = mix.mix((i - 1) / 11);
+
           return (
-            <div className="c c1">
+            <div className="c c1" style={style}>
               <span className="item-btn">
               {content}
               </span>
@@ -35,7 +39,7 @@ define([
       }
 
       return (
-        <div id="history" className="item face item-color-2">
+        <div id="history" className="item face">
           <div style={style}>
             {history}
           </div>
