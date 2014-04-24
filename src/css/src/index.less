@@ -1,11 +1,14 @@
-@yellow: #FEB379;
-@red: #D37982;
+@color1: #FEB379;
+@color2: #D37982;
 
-@itemHeight: 25rem;
-@fontSize: @itemHeight / 3;
+@heightVw: 25vw;
+@fontSizeVw: @heightVw / 3;
 
-@itemHeight2: 25rem;
-@fontSize2: @itemHeight2 / 3;
+@heightVh: 25vh;
+@fontSizeVh: @heightVh / 3;
+
+@heightRem: 25rem;
+@fontSizeRem: @heightRem / 3;
 
 * {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
@@ -20,7 +23,7 @@ body {
   -webkit-text-size-adjust: none; /* prevent webkit from resizing text to fit */
   -webkit-user-select: none; /* prevent copy paste, to allow, change 'none' to 'text' */
   font-family: "Montserrat", san-serif;
-  background: lighten(@yellow, 40%);
+  background: lighten(@color1, 40%);
 }
 
 a {
@@ -49,7 +52,7 @@ a {
 .page {
   .abs();
   //background: #A7DBD8;
-  background: lighten(@yellow, 20%);
+  background: lighten(@color1, 20%);
 }
 
 #card {
@@ -85,35 +88,62 @@ a {
 
 .item-font {
   font-weight: 500;
-  font-size: @fontSize;
+  font-size: @fontSizeRem;
+  font-size: @fontSizeVw;
   text-transform: uppercase;
   text-align: center;
 
   &:hover, &:focus {
     text-decoration: none;
   }
+
+  @media (min-aspect-ratio: 1/1) {
+    font-size: @fontSizeVh;
+  }
 }
 
 .item {
   display: block;
   width: 100%;
-  height: @itemHeight;
+  height: @heightRem;
+  height: @heightVw;
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+
+  @media (min-aspect-ratio: 1/1) {
+    height: @heightVh;
+  }
 }
 
 .item-btn {
   .item-font();
   display: block;
-  height: @itemHeight;
-  line-height: @itemHeight;
+  height: @heightRem;
+  height: @heightVw;
+  line-height: @heightRem;
+  line-height: @heightVw;
   //border-right: 1px solid lighten(@orange1, 5%);
 
   .icon {
-    font-size: @fontSize;
+    font-size: @fontSizeRem;
+    font-size: @fontSizeVw;
   }
 
   .glyphicon {
-    font-size: @fontSize * 0.8;
+    font-size: @fontSizeRem * 0.8;
+    font-size: @fontSizeVw * 0.8;
+  }
+
+  @media (min-aspect-ratio: 1/1) {
+    height: @heightVh;
+    line-height: @heightVh;
+
+    .icon {
+      font-size: @fontSizeVh;
+    }
+
+    .glyphicon {
+      font-size: @fontSizeVh * 0.8;
+    }
   }
 }
 
@@ -132,16 +162,28 @@ a {
 .face {
   .c1, .c2 {
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-    height: @itemHeight;
+    height: @heightRem;
+    height: @heightVw;
+
+    @media (min-aspect-ratio: 1/1) {
+      height: @heightVh;
+    }
   }
 
   .c1 {
     float: left;
-    width: @itemHeight;
-    height: @itemHeight;
+    width: @heightRem;
+    width: @heightVw;
+    height: @heightRem;
+    height: @heightVw;
     color: #fff;
     //background-color: rgba(0, 0, 0, 0.05);
     border-right: 1px solid rgba(255, 255, 255, 0.3);
+
+    @media (min-aspect-ratio: 1/1) {
+      width: @heightVh;
+      height: @heightVh;
+    }
   }
 
   .c2 {
@@ -152,10 +194,12 @@ a {
     .item-font();
 
     width: 100%;
-    height: @itemHeight;
-    padding: ((@itemHeight - @fontSize) / 2) @itemHeight / 10;
+    height: @heightRem;
+    height: @heightVw;
+    padding: ((@heightRem - @fontSizeRem) / 2) @heightRem / 10;
+    padding: ((@heightVw - @fontSizeVw) / 2) @heightVw / 10;
 
-    border: @itemHeight/20 solid rgba(0, 0, 0, 0.1);
+    border: (@heightRem / 20) solid rgba(0, 0, 0, 0.1);
     //border: (@itemHeight / 25) solid #ccc;
 
     background: transparent;
@@ -169,6 +213,12 @@ a {
       border-color: #fff;
     }
 
+    @media (min-aspect-ratio: 1/1) {
+      width: 100%;
+      height: @heightVh;
+      padding: ((@heightVh - @fontSizeVh) / 2) @heightVh / 10;
+    }
+
     &::placeholder {
       color: rgba(255, 255, 255, 0.5);
     }
@@ -177,11 +227,16 @@ a {
 
 header, footer {
   width: 100%;
-  height: @itemHeight;
+  height: @heightRem;
+  height: @heightVw;
   position: absolute;
   z-index: 2;
   left: 0;
   background-color: rgba(0, 0, 0, 0.05);
+
+  @media (min-aspect-ratio: 1/1) {
+    height: @heightVh;
+  }
 }
 
 header {
@@ -196,9 +251,18 @@ footer {
 
 .padding-bottom {
   > .item:last-child {
-    margin-bottom: @itemHeight;
+    margin-bottom: @heightRem;
+    margin-bottom: @heightVw;
   }
   //padding-bottom: @itemHeight;
+
+  @media (min-aspect-ratio: 1/1) {
+    > .item:last-child {
+      margin-bottom: @heightVh;
+    }
+
+    //padding-bottom: @itemHeight2;
+  }
 }
 
 .spin {
@@ -232,31 +296,46 @@ footer {
   .item-font();
   color: rgba(0, 0, 0, 0.5);
   margin: auto;
-  height: (@fontSize * 0.8) + 2 * (@itemHeight / 6)
-    + @itemHeight
-    + 2 * (@fontSize / 3) + @fontSize;
+  height: (@fontSizeRem * 0.8) + 2 * (@heightRem / 6)
+    + @heightRem
+    + 2 * (@fontSizeRem / 3) + @fontSizeRem;
+
+  height: (@fontSizeVw * 0.8) + 2 * (@heightVw / 6)
+    + @heightVw
+    + 2 * (@fontSizeVw / 3) + @fontSizeVw;
 
   .name {
-    padding: 0 @itemHeight / 20;
-    margin-bottom: @itemHeight / 6;
-    font-size: @fontSize * 0.8;
-    line-height: @fontSize * 0.8;
+    padding: 0 @heightRem / 20;
+    padding: 0 @heightVw / 20;
+
+    margin-bottom: @heightRem / 6;
+    margin-bottom: @heightVw / 6;
+
+    font-size: @fontSizeRem * 0.8;
+    font-size: @fontSizeVw * 0.8;
+
+    line-height: @fontSizeRem * 0.8;
+    line-height: @fontSizeVw * 0.8;
   }
 
   .result {
-    margin-bottom: @itemHeight / 6;
+    margin-bottom: @heightRem / 6;
+    margin-bottom: @heightVw / 6;
 
     > * {
-      line-height: @itemHeight;
+      line-height: @heightRem;
+      line-height: @heightVw;
     }
 
     .icon {
-      font-size: @itemHeight * 1.5 * 0.8;
+      font-size: @heightRem * 1.5 * 0.8;
+      font-size: @heightVw * 1.5 * 0.8;
       font-weight: bold;
     }
 
     .glyphicon {
-      font-size: @itemHeight * 1.5 * 0.6;
+      font-size: @heightRem * 1.5 * 0.6;
+      font-size: @heightVw * 1.5 * 0.6;
     }
   }
 
@@ -265,30 +344,32 @@ footer {
       margin: 0;
     }
     .small-text {
-      font-size: @fontSize / 4;
-      line-height: @fontSize / 4;
+      font-size: @fontSizeRem / 4;
+      font-size: @fontSizeVw / 4;
+      line-height: @fontSizeRem / 4;
+      line-height: @fontSizeVw / 4;
     }
   }
 
   @media (min-aspect-ratio: 8/10) {
-    height: @itemHeight;
+    height: @heightVh;
 
     .center-child {
-      font-size: @fontSize * 0.8;
-      line-height: @itemHeight;
-      height: @itemHeight;
+      font-size: @fontSizeVh * 0.8;
+      line-height: @heightVh;
+      height: @heightVh;
 
       > * {
         display: inline-block;
         vertical-align: middle;
-        line-height: @fontSize;
+        line-height: @fontSizeVh;
       }
     }
 
     .name {
       float: left;
       width: 40%;
-      padding: 0 @itemHeight / 20;
+      padding: 0 @heightVh / 20;
     }
 
     .result {
@@ -296,15 +377,15 @@ footer {
       width: 20%;
 
       > * {
-        line-height: @itemHeight;
+        line-height: @heightVh;
       }
 
       .icon {
-        font-size: @itemHeight * 0.8;
+        font-size: @heightVh * 0.8;
       }
 
       .glyphicon {
-        font-size: @itemHeight * 0.6;
+        font-size: @heightVh * 0.6;
       }
     }
 
@@ -327,6 +408,11 @@ footer {
   }
 
   > div {
-    height: @itemHeight;
+    height: @heightRem;
+    height: @heightVw;
+
+    @media (min-aspect-ratio: 1/1) {
+      height: @heightVh;
+    }
   }
 }
