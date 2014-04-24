@@ -29,16 +29,18 @@ define([
         }
 
         result = [
-          <div className="name">
+          <div className="name center-child">
             <p>{resText}</p>
           </div>,
           <div className="result">
             {content}
           </div>,
-          <div className="chance">
-            <p className="small-text">Based on a</p>
-            <p>1/{this.props.num}</p>
-            <p className="small-text">Chance</p>
+          <div className="chance center-child">
+            <div>
+              <p className="small-text">Based on a</p>
+              <p>1/{this.props.num}</p>
+              <p className="small-text">Chance</p>
+            </div>
           </div>
         ];
       }

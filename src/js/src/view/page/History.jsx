@@ -12,7 +12,7 @@ define([
     render: function () {
       var history;
       if (this.props.history != null) {
-        history = this.props.history.map(function (i) {
+        history = _.tail(this.props.history).map(function (i) {
 
           var content = <span className="icon">{i}</span>;
           if (this.props.num === 2 && i == 2) {

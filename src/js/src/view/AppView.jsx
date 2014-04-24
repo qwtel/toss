@@ -36,7 +36,6 @@ define([
       var routes = {};
 
       routes[PAGE.HOME] = function() {
-        this.getHistory();
         this.setPage(PAGE.HOME);
       }.bind(this);
 
@@ -84,6 +83,11 @@ define([
       this.setPage(PAGE.RESULT); // HACK
     },
 
+    firstToss: function() {
+      this.getHistory();
+      this.toss();
+    },
+
     toss: function () {
       this.setState({
         page: PAGE.TOSS
@@ -110,8 +114,8 @@ define([
           page =
             <TossPage
             num={this.state.num}
-            onClick={this.toss}
             dict={this.state.dict}
+            onClick={this.firstToss}
             onChange={this.onChange}
             />;
           break;
@@ -121,9 +125,9 @@ define([
             <ResultPage
             num={this.state.num}
             res={this.state.res}
-            onClick={this.toss}
-            history={this.state.history}
             dict={this.state.dict}
+            history={this.state.history}
+            onClick={this.toss}
             />;
           break;
       }

@@ -280,67 +280,68 @@ footer {
   .item-font();
   color: rgba(0, 0, 0, 0.5);
   margin: auto;
-  height: (@fontSize * 0.8) + 2 * (@itemHeight / 8)
+  height: (@fontSize * 0.8) + 2 * (@itemHeight / 6)
     + @itemHeight
     + 2 * (@fontSize / 3) + @fontSize;
 
   .name {
     padding: 0 @itemHeight / 20;
-    margin-bottom: @itemHeight / 8;
+    margin-bottom: @itemHeight / 6;
     font-size: @fontSize * 0.8;
     line-height: @fontSize * 0.8;
   }
 
   .result {
-    margin-bottom: @itemHeight / 8;
+    margin-bottom: @itemHeight / 6;
 
     > * {
       line-height: @itemHeight;
     }
 
     .icon {
-      font-size: @itemHeight * 1.1;
+      font-size: @itemHeight * 1.5 * 0.8;
       font-weight: bold;
     }
 
     .glyphicon {
-      font-size: @itemHeight * 1.1 * 0.75;
+      font-size: @itemHeight * 1.5 * 0.6;
     }
   }
 
   .chance {
-    > p {
+    p {
       margin: 0;
     }
     .small-text {
-      font-size: @fontSize / 3;
-      line-height: @fontSize / 3;
+      font-size: @fontSize / 4;
+      line-height: @fontSize / 4;
     }
   }
 
   @media (min-aspect-ratio: 8/10) {
     height: @itemHeight2;
 
-    .name {
-      float: left;
-      width: 40%;
-      padding: 0 @itemHeight2 / 20;
-      margin-bottom: @itemHeight2 / 8;
+    .center-child {
       font-size: @fontSize2 * 0.8;
       line-height: @itemHeight2;
       height: @itemHeight2;
 
-      > p {
+      > * {
         display: inline-block;
         vertical-align: middle;
         line-height: @fontSize2;
       }
     }
 
+    .name {
+      float: left;
+      width: 40%;
+      padding: 0 @itemHeight2 / 20;
+    }
+
     .result {
       float: left;
       width: 20%;
-      margin-bottom: @itemHeight2 / 8;
 
       > * {
         line-height: @itemHeight2;
@@ -358,8 +359,7 @@ footer {
     .chance {
       float: left;
       width: 40%;
-      padding-top: @itemHeight2 / 6;
-      font-size: @fontSize2 * 0.8;
+
       .small-text {
         font-size: @fontSize2 / 4;
         line-height: @fontSize2 / 4;
