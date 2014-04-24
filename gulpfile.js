@@ -13,8 +13,8 @@ var prefix = require('gulp-autoprefixer');
 var minifyHTML = require('gulp-minify-html');
 var minifyCSS = require('gulp-minify-css');
 
-const SRC = 'src';
-const BUILD = 'www';
+const SRC = 'www';
+const BUILD = 'build';
 
 const HTTP_PORT = 8000;
 
