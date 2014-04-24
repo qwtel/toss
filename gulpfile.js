@@ -79,7 +79,7 @@ gulp.task('images', function () {
     .pipe(gulp.dest(BUILD + '/img'));
 });
 
-gulp.task('compile', ['jsx', 'coffee', 'less', 'images']);
+gulp.task('compile', ['js', 'jsx', 'coffee', 'less', 'images']);
 
 // Rerun the task when a file changes
 gulp.task('watch', function () {
@@ -107,30 +107,19 @@ gulp.task('rjs', ['compile'], function () {
   return rjs({
     baseUrl: SRC + '/js/build',
     paths: {
-      backbone: '../../bower_components/backbone/backbone',
       bootstrap: '../../bower_components/bootstrap/dist/js/bootstrap',
       director: '../../bower_components/director/build/director',
       fastclick: '../../bower_components/fastclick/lib/fastclick',
-      jquery: '../../bower_components/jquery/dist/jquery',
-      moment: '../../bower_components/moment/moment',
       react: '../../bower_components/react/react-with-addons',
-      underscore: '../../bower_components/underscore/underscore'
+      underscore: '../../bower_components/underscore/underscore',
+      less: '../../bower_components/less/dist/less-1.7.0'
     },
     shim: {
-      backbone: {
-        exports: 'Backbone'
-      },
       director: {
         exports: 'Router'
       },
       fastclick: {
         exports: 'FastClick'
-      },
-      jquery: {
-        exports: '$'
-      },
-      moment: {
-        exports: 'moment'
       },
       react: {
         exports: "React"
