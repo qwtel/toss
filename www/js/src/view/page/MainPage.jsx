@@ -3,32 +3,18 @@
 define([
   'underscore',
   'react',
-  'mix',
-  'pages'
-], function (_, React, mix, PAGE) {
+  'pages',
+  'view/component/Dice'
+], function (_, React, PAGE, Dice) {
   return React.createClass({
     render: function () {
-      var items = _.range(3, 13).map(function (i, j) {
-        var style = mix.mix((j + 1) / 10);
-        return (
-          <div className="item" style={style}>
-            <a className="item-btn" href={'#/' + PAGE.DICE + '/' + i}>
-              <span>Dice</span>
-              {' '}
-              <span>{i}</span>
-            </a>
-          </div>);
+      var items = _.range(2, 13).map(function (i) {
+        return <Dice num={i} href={'#/' + PAGE.DICE + '/' + i} />;
       });
 
-      var style = mix.mix(0);
       return (
         <div className="page">
           <div className="list">
-            <div className="item" style={style}>
-              <a className="item-btn" href={'#/' + PAGE.DICE + '/2'}>
-              Coin
-              </a>
-            </div>
             {items}
           </div>
         </div>);

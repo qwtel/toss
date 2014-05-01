@@ -6,8 +6,9 @@ define([
   'mix',
   'pages',
   'coin',
-  'numbers'
-], function (_, React, mix, PAGE, COIN, NUMBER) {
+  'numbers',
+  'view/component/Dice'
+], function (_, React, mix, PAGE, COIN, NUMBER, Dice) {
   return React.createClass({
     onChange: function (i, e) {
       this.props.onChange(i, e.target.value);
@@ -22,7 +23,7 @@ define([
         number = COIN;
       }
 
-      var items = _.range(1, this.props.num + 1).reverse().map(function (i, j) {
+      var items = _.range(1, this.props.num + 1).map(function (i, j) {
         var content = <span className="icon">{i}</span>;
         if (this.props.num === 2 && i == 2) {
           content = <span className="glyphicon glyphicon-user" />;
@@ -33,10 +34,10 @@ define([
           dictText = this.props.dict[i];
         }
 
-        var style = mix.mix((this.props.num - 1 - j) / 11);
+        //var style = mix.mix((this.props.num - 2 - j) / 11);
 
         return (
-          <div key={i} className="item face" style={style}>
+          <div key={i} className={"item face shade-" + (j)}>
             <div className="c1">
               <span className="item-btn">
               {content}
@@ -54,18 +55,21 @@ define([
           </div>);
       }, this);
 
-      var styleFooter = mix.mix((this.props.num) / 11);
+      //var styleFooter = mix.mix((this.props.num) / 11);
       var footer = (
-        <footer style={styleFooter}>
-          <a className="item-btn" onClick={this.props.onClick}>
+        <footer className="item-btn">
+          <a className={"item-btn rest shade-" + (this.props.num - 1)} onClick={this.props.onClick}>
           {text}
           </a>
         </footer>);
 
-      var style = mix.bg((this.props.num) / 11);
+      //var style = mix.bg((this.props.num) / 11);
 
       return (
-        <div className="page" style={style}>
+        <div className="page">
+          <header>
+            <Dice num={this.props.num} href={'#/' + PAGE.HOME} />
+          </header>
           <div className="list padding-bottom">
             {items}
           </div>

@@ -56,7 +56,7 @@ define([
       }.bind(this);
 
       this.router = Router(routes);
-      this.router.init('/' + PAGE.HOME);
+      this.router.init('/' + PAGE.DICE + '/2');
     },
 
     setRem: function() {
@@ -196,6 +196,9 @@ define([
           classes = 'flipped';
         }
 
+        card = page;
+
+        /*
         card =
           <div id="card" className={classes}>
             <div className="front">
@@ -205,6 +208,7 @@ define([
               {pageBack}
             </div>
           </div>;
+          */
       }
       else {
         onClick = this.rand;
