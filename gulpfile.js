@@ -87,7 +87,7 @@ gulp.task('watch', ['compile'], function () {
   gulp.watch(paths.jsx, ['jsx']);
   gulp.watch(paths.coffee, ['coffee']);
   gulp.watch(paths.less, ['less']);
-  gulp.watch(paths.images, ['images']);
+  //gulp.watch(paths.images, ['images']);
   //gulp.watch(paths.spec, ['spec']);
 });
 

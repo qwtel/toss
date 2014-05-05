@@ -45,9 +45,11 @@ define([
         
         this.setState(obj);
 
-        setTimeout(function () {
-          this.setState({anim: false});
-        }.bind(this), 499);
+        if (obj.anim !== false) {
+          setTimeout(function () {
+            this.setState({anim: false});
+          }.bind(this), 499);
+        }
       }
     },
 
@@ -78,42 +80,8 @@ define([
       this.router.init('/' + PAGE.DICE + '/2');
     },
 
-    setRem: function () {
-      var docEl = document.documentElement;
-      var recalc = function () {
-
-        var mq = window.matchMedia("(min-aspect-ratio: 1/1)");
-        var reference;
-
-        if (!mq.matches) {
-          reference = docEl.clientWidth;
-        } else {
-          reference = docEl.clientHeight;
-        }
-
-        docEl.style.fontSize = (reference / 100) + 'px';
-        docEl.style.display = "none";
-        docEl.clientWidth; // Force relayout - important to new Androids
-        docEl.style.display = "";
-      };
-
-      if (!window.matchMedia) return;
-      var hasSupportFor = function (unit) {
-        var div = document.createElement('div');
-        div.setAttribute('style', 'font-size: 1' + unit);
-        return (div.style.fontSize == '1' + unit);
-      };
-
-      //if (hasSupportFor("vw") && hasSupportFor("vh")) return;
-      if (!hasSupportFor("rem")) return;
-
-      window.addEventListener('resize', recalc, false);
-      recalc(); // make sure the DOM is loaded at this point.
-    },
-
     componentDidMount: function () {
       this.configRoutes();
-      this.setRem();
     },
 
     getHistory: function () {
