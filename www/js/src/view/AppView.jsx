@@ -13,29 +13,48 @@ define([
     getInitialState: function () {
       return {
         pagePrev: null,
-        page: PAGE.HOME,
+        page: PAGE.DICE,
         spin: 0,
-        num: null,
+        num: 2,
         res: null,
         history: [],
-        dict: {}
+        dict: {},
+        anim: false
       };
     },
 
     setPage: function (page) {
       if (this.state.page !== page) {
-        this.setState({
-          pagePrev: this.state.page,
+        var pagePrev = this.state.page; 
+        var obj = {
+          pagePrev: pagePrev,
           page: page,
           spin: this.state.spin + 1
-        });
+        };
+        
+        obj.anim = false;
+        if (page === PAGE.HOME && pagePrev === PAGE.DICE) {
+          obj.anim = 'backward';
+        }
+        else if (page === PAGE.DICE && pagePrev === PAGE.HOME) {
+          obj.anim = 'forward';
+        } 
+        else if (page === PAGE.DICE && pagePrev === PAGE.RESULT) {
+          obj.anim = 'backward';
+        }
+        
+        this.setState(obj);
+
+        setTimeout(function () {
+          this.setState({anim: false});
+        }.bind(this), 499);
       }
     },
 
-    configRoutes: function() {
+    configRoutes: function () {
       var routes = {};
 
-      routes[PAGE.HOME] = function() {
+      routes[PAGE.HOME] = function () {
         this.setPage(PAGE.HOME);
       }.bind(this);
 
@@ -59,7 +78,7 @@ define([
       this.router.init('/' + PAGE.DICE + '/2');
     },
 
-    setRem: function() {
+    setRem: function () {
       var docEl = document.documentElement;
       var recalc = function () {
 
@@ -72,7 +91,7 @@ define([
           reference = docEl.clientHeight;
         }
 
-        docEl.style.fontSize = (reference/100) + 'px';
+        docEl.style.fontSize = (reference / 100) + 'px';
         docEl.style.display = "none";
         docEl.clientWidth; // Force relayout - important to new Androids
         docEl.style.display = "";
@@ -121,7 +140,7 @@ define([
       this.setPage(PAGE.RESULT); // HACK
     },
 
-    firstToss: function() {
+    firstToss: function () {
       this.getHistory();
       this.toss();
     },
@@ -140,17 +159,20 @@ define([
       });
     },
 
-    renderPage: function (name) {
+    renderPage: function (name, key) {
       var page;
       switch (name) {
 
         case PAGE.HOME:
-          page = <MainPage />;
+          page = <MainPage 
+            key={key}
+          />;
           break;
 
         case PAGE.DICE:
           page =
             <TossPage
+            key={key}
             num={this.state.num}
             dict={this.state.dict}
             onClick={this.firstToss}
@@ -161,6 +183,7 @@ define([
         case PAGE.RESULT:
           page =
             <ResultPage
+            key={key}
             num={this.state.num}
             res={this.state.res}
             dict={this.state.dict}
@@ -172,57 +195,73 @@ define([
       return page;
     },
 
-    render: function () {
-      console.log('AppView: render');
+    componentDidUpdate: function () {
+      if (this.state.anim) {
+        var el = this.refs.cardOff.getDOMNode();
+        var className = this.state.anim === 'forward' ? 'flipped' : 'flipped-back';
+        if (el.classList)
+          el.classList.add(className);
+        else
+          el.className += ' ' + className;
+      }
+    },
 
-      var card, pageFront, pageBack, classes, onClick;
+    render: function () {
+      //console.log('AppView: render');
+
+      var card, cardOff, onClick;
 
       if (this.state.page !== PAGE.TOSS) {
-        onClick = function () {
-        };
-        var page = this.renderPage(this.state.page);
-
+        var page = this.renderPage(this.state.page, '');
+        
         var pagePrev = '';
-        if (this.state.pagePrev !== null)
-          pagePrev = this.renderPage(this.state.pagePrev);
-
-        if (this.state.spin % 2 !== 0) {
-          pageFront = page;
-          pageBack = pagePrev;
-          classes = '';
-        } else {
-          pageFront = pagePrev;
-          pageBack = page;
-          classes = 'flipped';
+        if (this.state.pagePrev !== null) {
+          pagePrev = this.renderPage(this.state.pagePrev, 'prev');
         }
 
-        card = page;
+        var classes1 = "card off";
+        var classes2 = "card";
+        if (this.state.anim) {
+          // switch cards
+          classes1 = "card";
+          classes2 = "card off";
+        }
 
-        /*
-        card =
-          <div id="card" className={classes}>
+        cardOff =
+          <div className={classes1} ref="cardOff">
             <div className="front">
-              {pageFront}
+            {page}
             </div>
             <div className="back">
-              {pageBack}
+            {pagePrev}
             </div>
           </div>;
-          */
+
+        page = this.renderPage(this.state.page, 'off');
+        card =
+          <div className={classes2} ref="card">
+            <div className="back">
+              {page}
+            </div>
+          </div>;
       }
       else {
         onClick = this.rand;
+        cardOff = '';
         card =
-          <SpinCard
-          history={this.state.history}
-          dict={this.state.dict}
-          num={this.state.num}
-          dict={this.state.dict}
-          />
+          <div className='card spin' ref="cardOff">
+            <SpinCard
+            history={this.state.history}
+            dict={this.state.dict}
+            num={this.state.num}
+            dict={this.state.dict}
+            />
+          </div>;
       }
 
       return (
         <div id="app" onClick={onClick}>
+          {cardOff}
           {card}
         </div>);
     }

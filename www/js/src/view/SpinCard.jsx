@@ -1,44 +1,45 @@
 /** @jsx React.DOM */
 
 define([
-  '../../../bower_components/react/react-with-addons',
-  'mix',
-  'view/component/History'
-], function (React, mix, History) {
+  'react',
+  'view/component/Dice'
+], function (React, Dice) {
   return React.createClass({
     render: function () {
-      var style = mix.bg((this.props.num / 2) / 11);
-      var styleFooter = mix.mix((this.props.num) / 11);
+      var footer1 = (
+        <footer className="item-btn">
+          <a className={"item-btn rest shade-" + (this.props.num - 1)} onClick={this.props.onClick}>
+            Stop
+          </a>
+        </footer>);
+
+      var footer2 = (
+        <footer className="item-btn">
+          <a className={"item-btn rest shade-" + (this.props.num - 1)} onClick={this.props.onClick}>
+            Stop
+          </a>
+        </footer>);
+
       return (
-        <div id="card" className="spin">
+        <div>
           <div className="front">
-            <div className="page" style={style}>
+            <div className="page">
               <header>
-                <History
+                <Dice
                 num={this.props.num}
-                history={this.props.history}
                 />
               </header>
-              <footer style={styleFooter}>
-                <a className="item-btn" onClick={this.props.onClick}>
-                Stop
-                </a>
-              </footer>
+              {footer1}
             </div>
           </div>
           <div className="back">
-            <div className="page" style={style}>
+            <div className="page">
               <header>
-                <History
+                <Dice
                 num={this.props.num}
-                history={this.props.history}
                 />
               </header>
-              <footer style={styleFooter}>
-                <a className="item-btn" onClick={this.props.onClick}>
-                Stop
-                </a>
-              </footer>
+              {footer2}
             </div>
           </div>
         </div>);

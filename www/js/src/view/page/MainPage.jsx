@@ -9,12 +9,12 @@ define([
   return React.createClass({
     render: function () {
       var items = _.range(2, 13).map(function (i) {
-        return <Dice num={i} href={'#/' + PAGE.DICE + '/' + i} />;
-      });
+        return <Dice key={this.props.key + i} num={i} href={'#/' + PAGE.DICE + '/' + i} />;
+      }, this);
 
       return (
         <div className="page">
-          <div className="list">
+          <div className="main list">
             {items}
           </div>
         </div>);

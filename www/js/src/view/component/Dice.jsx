@@ -1,8 +1,7 @@
 define([
   'react',
-  'pages',
-  'mix'
-], function(React, PAGE, mix) {
+  'polygon'
+], function(React, POLYGON) {
   return React.createClass({
     propTypes: {
       num: React.PropTypes.number.isRequired,
@@ -10,8 +9,6 @@ define([
     },
 
     render: function() {
-      //var style = mix.mix((this.props.num - 2) / 7);
-
       var text = 'Dice';
       if (this.props.num  == 2) {
         text = 'Coin';
@@ -20,9 +17,7 @@ define([
       return (
         <div className="item">
           <a className={"item-btn shade-" + (this.props.num - 1)} href={this.props.href}>
-            <span className="left">
-              <img src={'img/polygon-' + this.props.num + '.svg'}/>
-            </span>
+            <span className="polygon left">{POLYGON[this.props.num]}</span>
             <span className="right">{this.props.num}</span>
             <span className="rest">{text}</span>
           </a>

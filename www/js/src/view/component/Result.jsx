@@ -1,13 +1,15 @@
 define([
-  '../../../../bower_components/react/react-with-addons',
+  'react',
   'coin',
-  'numbers'
-], function (React, COIN, NUMBER) {
+  'numbers',
+  'view/component/History'
+], function (React, COIN, NUMBER, History) {
   return React.createClass({
     propTypes: {
       num: React.PropTypes.number,
       res: React.PropTypes.number,
-      dict: React.PropTypes.object
+      dict: React.PropTypes.object,
+      history: React.PropTypes.array
     },
 
     render: function () {
@@ -28,26 +30,31 @@ define([
           resText = '"' + this.props.dict[this.props.res] + '"';
         }
 
-        result = [
-          <div className="name center-child">
-            <p>{resText}</p>
-          </div>,
-          <div className="result">
-            {content}
-          </div>,
-          <div className="chance center-child">
-            <div>
-              <p className="small-text">Based on a</p>
-              <p>1/{this.props.num}</p>
-              <p className="small-text">Chance</p>
+        result = (
+          <div className="bla">
+            <div className="name center-child">
+              <p>{resText}</p>
             </div>
-          </div>
-        ];
+            <div className="result">
+            {content}
+            </div>
+            <div className="chance center-child">
+              <div>
+                <p className="small-text">Based on a</p>
+                <p>1/{this.props.num}</p>
+                <p className="small-text">Chance</p>
+              </div>
+            </div>
+          </div>);
       }
 
       return (
-        <div id="result">
+        <div id="result" className={'shade-' + (this.props.res - 1)}>
           {result}
+          <History
+          num={this.props.num}
+          history={this.props.history}
+          />
         </div>);
     }
   });
