@@ -30,6 +30,7 @@ body {
   height: 100%;
   width: 100%;
   overflow: hidden;
+  -webkit-overflow-scrolling: none;
   
   -webkit-touch-callout: none; /* prevent callout to copy image, etc when tap to hold */
   -webkit-text-size-adjust: none; /* prevent webkit from resizing text to fit */
@@ -37,8 +38,6 @@ body {
   
   font-family: "Montserrat", san-serif;
   font-weight: 500;
-  -webkit-overflow-scrolling: none;
-
   background: #ddd;
 }
 
@@ -208,30 +207,25 @@ a {
 
   input {
     .item-font();
+    text-align: left;
+    
+    background: transparent;
+    outline: 0;
+    border-radius: 0;
+    box-shadow: none;
 
     width: 100%;
     height: @heightVw;
-    padding: ((@heightVw - @fontSizeVw) / 2) @heightVw / 10;
+    padding-left: @heightVw / 10;
+    padding-right: @heightVw / 10;
     line-height: normal;
 
     border: 5px solid transparent;
     border-bottom: 6px solid transparent;
-
-    color: #fff;
-    background: transparent;
-    outline: 0;
-    text-transform: uppercase;
-    text-align: left;
-    border-radius: 0;
-    box-shadow: none;
-    
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
     
     @media (min-aspect-ratio: 1/1) {
       width: 100%;
       height: @heightVh;
-      padding: ((@heightVh - @fontSizeVh) / 2) @heightVh / 10;
     }
   }
 }
