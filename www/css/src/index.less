@@ -273,53 +273,40 @@ a {
   border-bottom: 1px solid #eee;
   background-color: #fff;
 
-  height: (@fontSizeVw * 0.8) + 2 * (@heightVw / 6)
-    + @heightVw + @heightVw / 6
-    + 2 * (@fontSizeVw / 2) + @fontSizeVw
-    + 2 * @fontSizeVw
+  height: (1.5 * @fontSizeVw)
+    + @fontSizeVw
+    + (2.3 * @heightVw)
     + @heightVw;
 
   .bla {
-    padding: @fontSizeVw 0;
+    padding-top: (1.5 * @fontSizeVw);
 
     .name {
-      padding: 0 @heightVw / 20;
-
-      margin-bottom: @heightVw / 6;
-
-      font-size: @fontSizeVw * 0.8;
-
-      line-height: @fontSizeVw * 0.8;
+      padding: 0;
+      font-size: @fontSizeVw;
+      line-height: @fontSizeVw;
       p {
         margin: 0;
       }
     }
 
     .result {
-      margin-bottom: @heightVw / 6;
-
       > * {
-        line-height: @heightVw;
+        line-height: @heightVw * 2.3;
       }
 
       .icon {
-        font-size: @heightVw * 1.5 * 0.8;
+        font-size: @heightVw * 2.1 * 0.8;
         font-weight: bold;
       }
 
       .glyphicon {
-        font-size: @heightVw * 1.5 * 0.6;
+        font-size: @heightVw * 2.1 * 0.6;
       }
     }
 
     .chance {
-      p {
-        margin: 0;
-      }
-      .small-text {
-        font-size: @fontSizeVw / 3;
-        line-height: @fontSizeVw / 2;
-      }
+      display: none;
     }
   }
 
@@ -366,8 +353,14 @@ a {
       }
 
       .chance {
+        display: block;
         float: left;
         width: 40%;
+        
+        p {
+          margin: 0;
+        }
+        
         .small-text {
           font-size: @fontSizeVh / 4;
           line-height: @fontSizeVh / 3;
@@ -441,7 +434,6 @@ footer {
 
   input {
     color: @c;
-    //border-color: lighten(@c, 25%);
 
     &:active {
       border-color: lighten(@c, 20%);
