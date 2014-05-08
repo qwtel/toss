@@ -216,7 +216,8 @@ define([
       else {
         onClick = this.rand;
         cardOff = '';
-        card =
+        card = [
+          <a className={"stop shade-"+(this.state.num - 1)}>Stop</a>,
           <div className='card spin' ref="cardOff">
             <SpinCard
             history={this.state.history}
@@ -224,11 +225,11 @@ define([
             num={this.state.num}
             dict={this.state.dict}
             />
-          </div>;
+          </div>];
       }
 
       return (
-        <div id="app" onClick={onClick}>
+        <div id="app" onTouchStart={onClick} onClick={onClick} onTouchMove={function(e) {e.preventDefault()}}>
           {cardOff}
           {card}
         </div>);

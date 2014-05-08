@@ -6,7 +6,7 @@ define([
       num: React.PropTypes.number,
       history: React.PropTypes.array
     },
-
+    
     render: function () {
       var history, style;
 
@@ -34,7 +34,7 @@ define([
 
       return (
         <div id="history" className="item-btn">
-          <div style={style}>
+          <div style={style} onTouchMove={function(e) {e.stopPropagation()}}>
             {history}
           </div>
         </div>);

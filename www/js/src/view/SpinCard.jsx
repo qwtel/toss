@@ -6,18 +6,24 @@ define([
 ], function (React, Dice) {
   return React.createClass({
     render: function () {
+      
+      var text = 'Roll';
+      if (this.props.num === 2) {
+        text = 'Toss';
+      }
+      
       var footer1 = (
         <footer className="item-btn">
-          <a className={"item-btn rest shade-" + (this.props.num - 1)} onClick={this.props.onClick}>
-            Stop
-          </a>
+          <span className={"item-btn rest shade-" + (this.props.num - 1)}>
+          {text}
+          </span>
         </footer>);
 
       var footer2 = (
         <footer className="item-btn">
-          <a className={"item-btn rest shade-" + (this.props.num - 1)} onClick={this.props.onClick}>
-            Stop
-          </a>
+          <span className={"item-btn rest shade-" + (this.props.num - 1)}>
+          {text}
+          </span>
         </footer>);
 
       return (
@@ -25,9 +31,7 @@ define([
           <div className="front">
             <div className="page">
               <header>
-                <Dice
-                num={this.props.num}
-                />
+                <Dice num={this.props.num} />
               </header>
               {footer1}
             </div>
@@ -35,9 +39,7 @@ define([
           <div className="back">
             <div className="page">
               <header>
-                <Dice
-                num={this.props.num}
-                />
+                <Dice num={this.props.num} />
               </header>
               {footer2}
             </div>

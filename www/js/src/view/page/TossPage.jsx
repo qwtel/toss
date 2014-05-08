@@ -6,8 +6,9 @@ define([
   'pages',
   'coin',
   'numbers',
+  'view/component/List',
   'view/component/Dice'
-], function (_, React, PAGE, COIN, NUMBER, Dice) {
+], function (_, React, PAGE, COIN, NUMBER, List, Dice) {
   return React.createClass({
     onChange: function (i, e) {
       this.props.onChange(i, e.target.value);
@@ -63,11 +64,15 @@ define([
       return (
         <div className="page">
           <header>
-            <Dice num={this.props.num} href={'#/' + PAGE.HOME} />
+            <Dice 
+            num={this.props.num} 
+            href={'#/' + PAGE.HOME} 
+            icon={<span className="glyphicon glyphicon-align-justify"/>}
+            />
           </header>
-          <div className="list padding-bottom">
+          <List className="padding-bottom">
             {items}
-          </div>
+          </List>
           {footer}
         </div>);
     }

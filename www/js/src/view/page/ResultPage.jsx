@@ -24,7 +24,11 @@ define([
       return (
         <div className="page padding-top">
           <header>
-            <Dice num={this.props.num} href={'#/' + PAGE.DICE + '/' + this.props.num} />
+            <Dice 
+            num={this.props.num} 
+            href={'#/' + PAGE.DICE + '/' + this.props.num}
+            icon={<span className="glyphicon glyphicon-chevron-left" />}
+            />
           </header>
 
           <section>
