@@ -36,8 +36,9 @@ var paths = {
 
   less: SRC + '/css/src/**/*.less',
   css: SRC + '/css/build/**/*.css',
-
+  
   images: SRC + '/img/*',
+  fonts: SRC + '/fonts/*',
 
   index: SRC + '/index.html',
 
@@ -79,7 +80,12 @@ gulp.task('images', function () {
     .pipe(gulp.dest(BUILD + '/img'));
 });
 
-gulp.task('compile', ['js', 'jsx', 'coffee', 'less', 'images']);
+gulp.task('fonts', function () {
+  return gulp.src(paths.fonts)
+    .pipe(gulp.dest(BUILD + '/fonts'));
+});
+
+gulp.task('compile', ['js', 'jsx', 'coffee', 'less', 'images', 'fonts']);
 
 // Rerun the task when a file changes
 gulp.task('watch', ['compile'], function () {
