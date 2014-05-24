@@ -16,7 +16,7 @@ define([
 
       var footer = (
         <footer className="item-btn">
-          <a className={"item-btn rest shade-" + (this.props.num - 1)} onClick={this.props.onClick}>
+          <a className={"item-btn rest inv shade-" + (this.props.num - 1)} onClick={this.props.onClick}>
               { this.props.num === 2 ? 'Toss' : 'Roll' }
           </a>
         </footer>);
@@ -28,6 +28,7 @@ define([
             num={this.props.num} 
             href={'#/' + PAGE.DICE + '/' + this.props.num}
             icon={<span className="glyphicon glyphicon-chevron-left" />}
+            inv={true}
             />
           </header>
 

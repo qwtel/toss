@@ -7,8 +7,12 @@ define([
   'view/page/MainPage',
   'view/page/TossPage',
   'view/page/ResultPage',
-  'view/SpinCard'
-], function (React, Router, PAGE, MainPage, TossPage, ResultPage, SpinCard) {
+  'view/SpinCard',
+  'scalaish/Option'
+], function (React, Router, PAGE, MainPage, TossPage, ResultPage, SpinCard, __Option__) {
+
+  var Option = __Option__.Option;
+
   return React.createClass({
     getInitialState: function () {
       return {
@@ -19,30 +23,33 @@ define([
         res: null,
         history: [],
         dict: {},
+        dictDirty: false,
         anim: false
       };
     },
 
     setPage: function (page) {
       if (this.state.page !== page) {
-        var pagePrev = this.state.page; 
+        var pagePrev = this.state.page;
         var obj = {
           pagePrev: pagePrev,
           page: page,
           spin: this.state.spin + 1
         };
-        
-        obj.anim = false;
+
         if (page === PAGE.HOME && pagePrev === PAGE.DICE) {
           obj.anim = 'backward';
         }
         else if (page === PAGE.DICE && pagePrev === PAGE.HOME) {
           obj.anim = 'forward';
-        } 
+        }
         else if (page === PAGE.DICE && pagePrev === PAGE.RESULT) {
           obj.anim = 'backward';
         }
-        
+        else {
+          obj.anim = false;
+        }
+
         this.setState(obj);
 
         if (obj.anim !== false) {
@@ -56,12 +63,14 @@ define([
     configRoutes: function () {
       var routes = {};
 
+      // /home
       routes[PAGE.HOME] = function () {
         this.setPage(PAGE.HOME);
       }.bind(this);
 
       routes[''] = routes[PAGE.HOME];
 
+      // /dice/2/result
       routes[[PAGE.DICE, ':num', PAGE.RESULT].join('/')] = function (num) {
         this.setState({
           num: Number(num)
@@ -69,6 +78,7 @@ define([
         this.setPage(PAGE.RESULT);
       }.bind(this);
 
+      // /dice/2
       routes[[PAGE.DICE, ':num'].join('/')] = function (num) {
         this.setState({
           num: Number(num)
@@ -120,6 +130,19 @@ define([
       return true;
     },
 
+    clear: function() {
+      this.setState({
+        dict: {},
+        dictDirty: false
+      });
+    },
+
+    setDictDirty: function() {
+      this.setState({
+        dictDirty: true
+      });
+    },
+
     onChange: function (key, value) {
       this.state.dict[key] = value;
       this.setState({
@@ -132,8 +155,8 @@ define([
       switch (name) {
 
         case PAGE.HOME:
-          page = <MainPage 
-            key={key}
+          page = <MainPage
+          key={key}
           />;
           break;
 
@@ -145,6 +168,10 @@ define([
             dict={this.state.dict}
             onClick={this.firstToss}
             onChange={this.onChange}
+            clear={this.clear}
+            dictDirty={this.state.dictDirty}
+            setDictDirty={this.setDictDirty}
+            withoutTabIndex={(key === 'off')}
             />;
           break;
 
@@ -175,63 +202,64 @@ define([
     },
 
     render: function () {
-      //console.log('AppView: render');
+      var cards = (this.state.page !== PAGE.TOSS) ?
+        function () { // if
+          var page = this.renderPage(this.state.page, '');
 
-      var card, cardOff, onClick;
+          var pagePrev = Option(this.state.pagePrev)
+            .map(function (pagePrev) {
+              return this.renderPage(pagePrev, 'prev');
+            }, this)
+            .orNull();
 
-      if (this.state.page !== PAGE.TOSS) {
-        var page = this.renderPage(this.state.page, '');
-        
-        var pagePrev = '';
-        if (this.state.pagePrev !== null) {
-          pagePrev = this.renderPage(this.state.pagePrev, 'prev');
-        }
+          var classes = (this.state.anim) ?
+            ['card', 'card off'] :
+            ['card off', 'card'];
 
-        var classes1 = "card off";
-        var classes2 = "card";
-        if (this.state.anim) {
-          // switch cards
-          classes1 = "card";
-          classes2 = "card off";
-        }
-
-        cardOff =
-          <div className={classes1} ref="cardOff">
-            <div className="front">
-            {page}
-            </div>
-            <div className="back">
-            {pagePrev}
-            </div>
-          </div>;
-
-        page = this.renderPage(this.state.page, 'off');
-        card =
-          <div className={classes2} ref="card">
-            <div className="back">
+          var cardOff =
+            <div className={classes[0]} ref="cardOff">
+              <div className="front">
               {page}
-            </div>
-          </div>;
-      }
-      else {
-        onClick = this.rand;
-        cardOff = '';
-        card = [
-          <a className={"stop shade-"+(this.state.num - 1)}>Stop</a>,
-          <div className='card spin' ref="cardOff">
-            <SpinCard
-            history={this.state.history}
-            dict={this.state.dict}
-            num={this.state.num}
-            dict={this.state.dict}
-            />
-          </div>];
-      }
+              </div>
+              <div className="back">
+              {pagePrev}
+              </div>
+            </div>;
+
+          page = this.renderPage(this.state.page, 'off');
+          var card =
+            <div className={classes[1]} ref="card">
+              <div className="back">
+              {page}
+              </div>
+            </div>;
+
+          return [cardOff, card, null]
+        }.call(this)
+        : // else
+        function () {
+          var onClick = this.rand;
+          var card = [
+            <a className={"stop inv shade-" + (this.state.num - 1)}>Stop</a>,
+            <div className='card spin' ref="cardOff">
+              <SpinCard
+              history={this.state.history}
+              dict={this.state.dict}
+              num={this.state.num}
+              dict={this.state.dict}
+              />
+            </div>];
+          return [null, card, onClick]
+        }.call(this);
+
+      var preventDefault = function (e) {
+        e.preventDefault()
+      };
 
       return (
-        <div id="app" onTouchStart={onClick} onClick={onClick} onTouchMove={function(e) {e.preventDefault()}}>
-          {cardOff}
-          {card}
+        <div id="app" onTouchStart={cards[2]} onClick={cards[2]} onTouchMove={preventDefault}>
+          {cards[0]}
+          {cards[1]}
         </div>);
     }
   });

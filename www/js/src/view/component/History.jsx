@@ -1,40 +1,50 @@
+/** @jsx React.DOM */
+
 define([
-  'react'
-], function (React) {
+  'react',
+  'scalaish/Option'
+], function (React, __Option__) {
+
+  var Option = __Option__.Option;
+
   return React.createClass({
     propTypes: {
-      num: React.PropTypes.number,
+      num: React.PropTypes.number.isRequired,
       history: React.PropTypes.array
     },
-    
+
     render: function () {
-      var history, style;
+      var history =
+        Option(this.props.history)
+          .map(function (history) {
+            return history.map(function (num, j) {
 
-      if (this.props.history != null) {
-        history = this.props.history.map(function (i, j) {
+              var content = this.props.num === 2 && num === 2 ?
+                <span className="glyphicon glyphicon-user" /> :
+                <span className="icon">{num}</span>;
 
-          var content = <span className="icon">{i}</span>;
-          if (this.props.num === 2 && i == 2) {
-            content = <span className="glyphicon glyphicon-user" />;
-          }
+              var shade = Math.round((num - 1) / (this.props.num - 1) * 11);
 
-          return (
-            <div key={'history-' + j} className={"left shade-" + (i - 1)}>
-              {content}
-            </div>);
-        }, this);
-      }
+              return (
+                <div key={'history-' + j} className={"left shade-" + shade}>
+                  {content}
+                </div>);
+
+            }, this)
+          }, this)
+          .orNull();
 
       var width = (history.length) * 20;
-      style = { width: width + 'vw' };
       var mq = window.matchMedia("(min-aspect-ratio: 1/1)");
-      if (mq.matches) {
-        style = { width: width + 'vh' };
-      }
+      var style = mq.matches ?
+      { width: width + 'vh' } :
+      { width: width + 'vw' };
 
       return (
         <div id="history" className="item-btn">
-          <div style={style} onTouchMove={function(e) {e.stopPropagation()}}>
+          <div style={style} onTouchMove={function (e) {
+            e.stopPropagation()
+          }}>
             {history}
           </div>
         </div>);

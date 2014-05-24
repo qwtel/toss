@@ -10,7 +10,13 @@ define([
   return React.createClass({
     render: function () {
       var items = _.range(2, 13).map(function (i) {
-        return <Dice key={this.props.key + i} num={i} href={'#/' + PAGE.DICE + '/' + i} />;
+        return (
+          <Dice
+          key={this.props.key + i}
+          num={i}
+          href={'#/' + PAGE.DICE + '/' + i}
+          inv={true}
+          />);
       }, this);
 
       return (

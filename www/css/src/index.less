@@ -289,7 +289,7 @@ a {
       
       p {
         display: inline-block;
-        border-bottom: 5px solid;
+        border-bottom: 3px solid;
         padding-bottom: @fontSizeVw;
         margin: 0 @fontSizeVw / 1.5;
       }
@@ -428,13 +428,14 @@ footer {
 
 .shade(@percent) {
   @c: mix(@color2, @color1, @percent);
+  @bc: lighten(@color1, 15%);
 
   color: @c;
   background-color: #fff;
-  border-color: lighten(@c, 20%) !important;
+  border-color: @bc!important;
 
   > * {
-    border-color: lighten(@c, 20%) !important;
+    border-color: @bc!important;
   }
 
   a&:hover, a&:active {
@@ -449,7 +450,7 @@ footer {
     color: @c;
 
     &:active {
-      border-color: lighten(@c, 20%);
+      border-color: @bc;
     }
 
     &:focus {
@@ -463,56 +464,129 @@ footer {
   }
 }
 
+.shade-inv(@percent) {
+  @c: mix(@color2, @color1, @percent);
+
+  color: #fff;
+  background-color: @c;
+  border-color: rgba(255, 255, 255, 0.3)!important;
+
+  > * {
+    border-color: rgba(255, 255, 255, 0.3)!important;
+  }
+
+  a&:hover, a&:active {
+    color: #fff;
+  }
+
+  a&:active {
+    background-color: shade(@c, 5%);
+  }
+}
+
+.shade-clear {
+  @c: #ddd;
+  @bc: #eee;
+
+  color: @c;
+  background-color: #fff;
+  border-color: @bc!important;
+
+  > * {
+    border-color: @bc!important;
+  }
+
+  a&:hover, a&:active {
+    color: @c;
+  }
+
+  a&:active {
+    background-color: #fafafa;
+  }
+}
+
 .shade-0 {
   .shade(0/11 * 100%);
+  &.inv {
+    .shade-inv(0/11 * 100%);
+  }
 }
 
 .shade-1 {
   .shade(1/11 * 100%);
+  &.inv {
+    .shade-inv(1/11 * 100%);
+  }
 }
 
 .shade-2 {
   .shade(2/11 * 100%);
+  &.inv {
+    .shade-inv(2/11 * 100%);
+  }
 }
 
 .shade-3 {
   .shade(3/11 * 100%);
+  &.inv {
+    .shade-inv(3/11 * 100%);
+  }
 }
 
 .shade-4 {
   .shade(4/11 * 100%);
+  &.inv {
+    .shade-inv(4/11 * 100%);
+  }
 }
 
 .shade-5 {
   .shade(5/11 * 100%);
+  &.inv {
+    .shade-inv(5/11 * 100%);
+  }
 }
 
 .shade-6 {
   .shade(6/11 * 100%);
+  &.inv {
+    .shade-inv(6/11 * 100%);
+  }
 }
 
 .shade-7 {
   .shade(7/11 * 100%);
+  &.inv {
+    .shade-inv(7/11 * 100%);
+  }
 }
 
 .shade-8 {
   .shade(8/11 * 100%);
+  &.inv {
+    .shade-inv(8/11 * 100%);
+  }
 }
 
 .shade-9 {
   .shade(9/11 * 100%);
+  &.inv {
+    .shade-inv(9/11 * 100%);
+  }
 }
 
 .shade-10 {
   .shade(10/11 * 100%);
+  &.inv {
+    .shade-inv(10/11 * 100%);
+  }
 }
 
 .shade-11 {
   .shade(11/11 * 100%);
-}
-
-.shade-11 {
-  .shade(11/11 * 100%);
+  &.inv {
+    .shade-inv(11/11 * 100%);
+  }
 }
 
 .stop {
