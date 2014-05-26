@@ -4,7 +4,6 @@ define([
   'react',
   'scalaish/Option'
 ], function (React, __Option__) {
-
   var Option = __Option__.Option;
 
   return React.createClass({

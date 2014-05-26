@@ -1,7 +1,9 @@
 define("scalaish/helpers/helpers",
-  ["exports"],
-  function(__exports__) {
+  ["underscore","exports"],
+  function(__dependency1__, __exports__) {
     "use strict";
+    var _ = __dependency1__;
+
     // http://coffeescript.org/
     var __extends = function (parent, child) {
       child.__super__ = parent.prototype;
@@ -17,6 +19,7 @@ define("scalaish/helpers/helpers",
     };
 
     // http://stackoverflow.com/a/1880726/870615
+    // super bad performance, don't use this
     var __isConstructor = function (_this, Class) {
       var isConstructor = false;
       var key = '__previouslyConstructedBy' + Class.name + '__';
@@ -37,8 +40,8 @@ define("scalaish/helpers/helpers",
     };
 
     // http://underscorejs.org/
-    var __result = function (value) {
-      return __isFunction(value) ? value.call() : value;
+    var __result = function (value, context) {
+      return __isFunction(value) ? value.call(context) : value;
     };
 
     // http://stackoverflow.com/a/728694/870615
@@ -63,9 +66,25 @@ define("scalaish/helpers/helpers",
       return copy;
     };
 
+    var println = console.log;
+
+    function time(f, context) {
+      var start = new Date().getTime();
+      f.call(context);
+      var now = new Date().getTime();
+      return now - start
+    }
+
+    function printTime(f, context) {
+      println(time(f, context))
+    }
+
     __exports__.__extends = __extends;
     __exports__.__isConstructor = __isConstructor;
     __exports__.__isFunction = __isFunction;
     __exports__.__result = __result;
     __exports__.__clone = __clone;
+    __exports__.println = println;
+    __exports__.time = time;
+    __exports__.printTime = printTime;
   });

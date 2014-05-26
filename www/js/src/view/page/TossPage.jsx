@@ -8,9 +8,11 @@ define([
   'numbers',
   'view/component/List',
   'view/component/Dice',
-  'scalaish/Option'
-], function (_, React, PAGE, COIN, NUMBER, List, Dice, __Option__) {
+  'scalaish/Option',
+  'scalaish/Tuple'
+], function (_, React, PAGE, COIN, NUMBER, List, Dice, __Option__, __T__) {
   var Option = __Option__.Option;
+  var T = __T__.T;
 
   return React.createClass({
 
@@ -27,7 +29,7 @@ define([
 
     render: function () {
 
-      var textNumber = this.props.num === 2 ? ['Toss', COIN] : ['Roll', NUMBER];
+      var textNumber = this.props.num === 2 ? T('Toss', COIN) : T('Roll', NUMBER);
 
       var items = _.range(1, this.props.num + 1)
         .map(function (num, j) {
@@ -51,7 +53,7 @@ define([
                   type="text"
                   tabIndex={this.props.withoutTabIndex ? null : j + 1}
                   ref={'input-' + num}
-                  placeholder={textNumber[1][num]}
+                  placeholder={textNumber._2[num]}
                   value={dictText}
                   onChange={this.onChange.bind(this, num)}
                   onKeyUp={this.onKeyUp}
@@ -81,7 +83,7 @@ define([
       var footer =
         <footer className="item-btn">
           <a className={"item-btn rest inv shade-" + (this.props.num - 1)} onClick={this.props.onClick}>
-          {textNumber[0]}
+          {textNumber._1}
           </a>
         </footer>;
 

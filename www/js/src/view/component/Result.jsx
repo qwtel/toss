@@ -7,7 +7,6 @@ define([
   'view/component/History',
   'scalaish/Option'
 ], function (React, COIN, NUMBER, History, __Option__) {
-
   var Option = __Option__.Option;
 
   return React.createClass({

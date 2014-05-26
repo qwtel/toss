@@ -8,10 +8,13 @@ define([
   'view/page/TossPage',
   'view/page/ResultPage',
   'view/SpinCard',
-  'scalaish/Option'
-], function (React, Router, PAGE, MainPage, TossPage, ResultPage, SpinCard, __Option__) {
-
+  'scalaish/Option',
+  'scalaish/Tuple'
+], function (React, Router, PAGE, MainPage, TossPage, ResultPage, SpinCard, __Option__, __T__) {
   var Option = __Option__.Option;
+  var Some = __Option__.Some;
+  var None = __Option__.None;
+  var T = __T__.T;
 
   return React.createClass({
     getInitialState: function () {
@@ -130,14 +133,14 @@ define([
       return true;
     },
 
-    clear: function() {
+    clear: function () {
       this.setState({
         dict: {},
         dictDirty: false
       });
     },
 
-    setDictDirty: function() {
+    setDictDirty: function () {
       this.setState({
         dictDirty: true
       });
@@ -213,11 +216,11 @@ define([
             .orNull();
 
           var classes = (this.state.anim) ?
-            ['card', 'card off'] :
-            ['card off', 'card'];
+            T('card', 'card off') :
+            T('card off', 'card');
 
           var cardOff =
-            <div className={classes[0]} ref="cardOff">
+            <div className={classes._1} ref="cardOff">
               <div className="front">
               {page}
               </div>
@@ -228,13 +231,14 @@ define([
 
           page = this.renderPage(this.state.page, 'off');
           var card =
-            <div className={classes[1]} ref="card">
+            <div className={classes._2} ref="card">
               <div className="back">
               {page}
               </div>
             </div>;
 
-          return [cardOff, card, null]
+          return T(Some(cardOff), Some(card), None())
+
         }.call(this)
         : // else
         function () {
@@ -249,7 +253,9 @@ define([
               dict={this.state.dict}
               />
             </div>];
-          return [null, card, onClick]
+
+          return T(None(), Some(card), Some(onClick))
+
         }.call(this);
 
       var preventDefault = function (e) {
@@ -257,9 +263,13 @@ define([
       };
 
       return (
-        <div id="app" onTouchStart={cards[2]} onClick={cards[2]} onTouchMove={preventDefault}>
-          {cards[0]}
-          {cards[1]}
+        <div id="app"
+        onTouchStart={cards._3.orNull()}
+        onClick={cards._3.orNull()}
+        onTouchMove={preventDefault}
+        >
+          {cards._1.orNull()}
+          {cards._2.orNull()}
         </div>);
     }
   });
