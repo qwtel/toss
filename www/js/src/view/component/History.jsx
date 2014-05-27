@@ -25,7 +25,7 @@ define([
               var shade = Math.round((num - 1) / (this.props.num - 1) * 11);
 
               return (
-                <div key={'history-' + j} className={"left shade-" + shade}>
+                <div key={'history-' + j} className={"left ico shade-" + shade}>
                   {content}
                 </div>);
 

@@ -29,9 +29,12 @@ define([
 
     render: function () {
 
-      var textNumber = this.props.num === 2 ? T('Toss', COIN) : T('Roll', NUMBER);
+      // (text, placeholders, range)
+      var tuple = this.props.num === 2 ?
+        T('Toss', COIN, [2, 1]) :
+        T('Roll', NUMBER, _.range(1, this.props.num + 1));
 
-      var items = _.range(1, this.props.num + 1)
+      var items = tuple._3
         .map(function (num, j) {
 
           var content = this.props.num === 2 && num === 2 ?
@@ -45,7 +48,7 @@ define([
           return (
             <div key={this.props.key + num} className="item">
               <div className={"item-btn shade-" + (shade)}>
-                <div className="left">
+                <div className="ico left">
                 {content}
                 </div>
                 <div className="rest">
@@ -53,7 +56,7 @@ define([
                   type="text"
                   tabIndex={this.props.withoutTabIndex ? null : j + 1}
                   ref={'input-' + num}
-                  placeholder={textNumber._2[num]}
+                  placeholder={tuple._2[num]}
                   value={dictText}
                   onChange={this.onChange.bind(this, num)}
                   onKeyUp={this.onKeyUp}
@@ -83,14 +86,14 @@ define([
       var footer =
         <footer className="item-btn">
           <a className={"item-btn rest inv shade-" + (this.props.num - 1)} onClick={this.props.onClick}>
-          {textNumber._1}
+          {tuple._1}
           </a>
         </footer>;
 
       return (
         <div className="page">
           {header}
-          <List className="padding-bottom">
+          <List className="toss padding-bottom">
             {items}
             {clearButton}
           </List>
