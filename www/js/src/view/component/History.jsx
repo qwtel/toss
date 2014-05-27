@@ -1,9 +1,10 @@
 /** @jsx React.DOM */
 
 define([
+  'underscore',
   'react',
   'scalaish/Option'
-], function (React, __Option__) {
+], function (_, React, __Option__) {
   var Option = __Option__.Option;
 
   return React.createClass({
@@ -16,7 +17,7 @@ define([
       var history =
         Option(this.props.history)
           .map(function (history) {
-            return history.map(function (num, j) {
+            return _.tail(history).map(function (num, j) {
 
               var content = this.props.num === 2 && num === 2 ?
                 <span className="glyphicon glyphicon-user" /> :
